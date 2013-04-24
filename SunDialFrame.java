@@ -42,12 +42,21 @@ import java.awt.print.PrinterJob;
 import javax.swing.JOptionPane;
 
 /**
+<<<<<<< HEAD
  * Sundial GUI main class. Draws out the sundial ONLY AFTER input has been
  * validated.
  * 
  * @author Amy
  * @author Reginald
  * @author Bryce
+=======
+<<<<<<< HEAD
+ * <( X_X <)
+=======
+>>>>>>> 8300f5cded35ca70e54ad61e2a67b23909ded4e2
+ * check me amy
+ * @author briceorbryce
+>>>>>>> a62a3a7dc917653f0185343afae520247e65f3e5
  */
 public class SunDialFrame extends javax.swing.JFrame implements Printable {
 	/**SerialVersionUID*/
