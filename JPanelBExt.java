@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  */
 public class JPanelBExt extends JPanel{
     /**Serial Version UID*/
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	/**The name of the panel.*/
 	private final String nameOfPanel;
@@ -59,10 +59,29 @@ public class JPanelBExt extends JPanel{
         	/*x is the hour line*/
         	for(double x = 1; x < 6; x++){
         			di.setPoint((int)x, Math.toRadians(sundial.adjustAngle(x)));
+        			int y = 0;
+        			switch((int)x){
+        				case 1:
+        					y = 11;
+        					break;
+        				case 2:
+        					y = 10;
+        					break;
+        				case 3:
+        					y = 9;
+        					break;
+        				case 4:
+        					y = 8;
+        					break;
+        				case 5:
+        					y = 7;
+        					break;
+        			}
+        			di.setPoint((int)y, -Math.toRadians(sundial.adjustAngle(x)));
         	}
-        	for(int x = 11; x >= 7; x--){
-        			di.setPoint(x, Math.toRadians(sundial.adjustAngle(x)));
-        	}
+     //   	for(int x = 11; x >= 7; x--){
+       // 			di.setPoint(x, Math.toRadians(sundial.adjustAngle(x)));
+       // 	}
         	di.drawDial(g);
         }
         else if(nameOfPanel.equals("gnomon")){
