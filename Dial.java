@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 public class Dial {
-  /*height and width of panel*/
+	/*height and width of panel*/
 	double height;
 	double width;
 	/*array of the points of the dial lines*/
