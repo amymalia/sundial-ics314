@@ -1,16 +1,44 @@
-package sundial;
+/*
+ * Copyright (c) 2013, Amy, Reginald, Bryce
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 		Redistributions of source code must retain the above copyright notice, this
+ * 		list of conditions and the following disclaimer.
+ * 
+ * 		Redistributions in binary form must reproduce the above copyright
+ * 		notice, this list of conditions and the following disclaimer in the
+ * 		documentation and/or other materials provided with the distribution.
+ * 
+ * 		Neither the name of the University of Hawaii, ICS Dept, nor the names
+ * 		of its contributors	may be used to endorse or promote products derived
+ * 		from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
+//package sundial;
 
 import java.awt.Graphics;
-import javax.swing.JPanel;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+import javax.swing.JPanel;
 
 /**
  * This class extends JPanel to override the method that repaints the panel
- * every time the user's mouse hovers over the tabs in the SunDialFrame class.
+ * everytime the user's mouse hovers over the tabs in the SunDialFrame class.
  * 
  * Instead, we repaint the exact same thing.
  * 
@@ -19,91 +47,90 @@ import javax.swing.JPanel;
  * @author briceorbryce
  */
 public class JPanelBExt extends JPanel{
-    /**Serial Version UID*/
+	/**Serial Version UID*/
 	private static final long serialVersionUID = 1L;
-	
+
 	/**The name of the panel.*/
 	private final String nameOfPanel;
-	
-    /**user input variables*/
+
+	/**User input variables.*/
     SundialMath sundial;
     
-    /**
-     * The name of the panel will either be "gnomon" or "sundial"
-     * 
-     * @param name of the panel
-     */
-    public JPanelBExt (String name) {
-        this.nameOfPanel = name;
-    }
-    
-    /**
-     * Override the paintComponent method to redraw the same components on the
-     * panel.
-     * 
-     * 4/27/2013 @ 4:43 pm
-     * Right now, to show that it works, a line gets printed on both panels at
-     * startup and when you click the button.
-     */
-    /* (non-Javadoc)
-     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-     */
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // TODO if gnomon or if sundial
-        if(nameOfPanel.equals("sundial")){
-        	//print sundial here
-        	System.out.println("sundial");
-        	Dial di = new Dial(this);
-        	/*x is the hour line*/
-        	for(double x = 1; x < 6; x++){
-        			di.setPoint((int)x, Math.toRadians(sundial.adjustAngle(x)));
-        			int y = 0;
-        			switch((int)x){
-        				case 1:
-        					y = 11;
-        					break;
-        				case 2:
-        					y = 10;
-        					break;
-        				case 3:
-        					y = 9;
-        					break;
-        				case 4:
-        					y = 8;
-        					break;
-        				case 5:
-        					y = 7;
-        					break;
-        			}
-        			di.setPoint((int)y, -Math.toRadians(sundial.adjustAngle(x)));
-        	}
-     //   	for(int x = 11; x >= 7; x--){
-       // 			di.setPoint(x, Math.toRadians(sundial.adjustAngle(x)));
-       // 	}
-        	di.drawDial(g);
-        }
-        else if(nameOfPanel.equals("gnomon")){
-        	//print gnomon here
-        	Gnomon gn = new Gnomon(30.0, this);
-        	gn.drawGnomon(g);
-        }
-        else{
-        	System.out.println("This should not happen.");
-        }
-    }
-    
-    /**
-     * Called from the SunDialFrame class. This method needs to take some kind
-     * of object as its parameter but it has not been created yet.
-     */
-    public void paintMe (SundialMath s) {
-    	// TODO
-    	System.out.println("Should see this only after pressing button");
-    	sundial = s; //not sure if this is the best way to assign...cant remember lol 
-    	this.repaint();
-    	
-    }
-    
+    private boolean crunProgram = false;
+
+	/**
+	 * The name of the panel will either be "gnomon" or "sundial"
+	 * 
+	 * @param name of the panel
+	 */
+	public JPanelBExt (String name) {
+		this.nameOfPanel = name;
+	}
+
+	/**
+	 * Override the paintComponent method to redraw the same components on the
+	 * panel.
+	 */
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		if (this.crunProgram) {
+	        if(this.nameOfPanel.equals("sundial")){ //$NON-NLS-1$
+	        	//print sundial here
+	        	System.out.println("sundial"); //$NON-NLS-1$
+	        	Dial di = new Dial(this);
+	        	/*x is the hour line*/
+	        	for(double x = 1; x < 6; x++){
+	        			di.setPoint((int)x, Math.toRadians(this.sundial.adjustAngle(x)));
+	        			int y = 0;
+	        			switch((int)x){
+	        				case 1:
+	        					y = 11;
+	        					break;
+	        				case 2:
+	        					y = 10;
+	        					break;
+	        				case 3:
+	        					y = 9;
+	        					break;
+	        				case 4:
+	        					y = 8;
+	        					break;
+	        				case 5:
+	        					y = 7;
+	        					break;
+	        				default:
+	        					// Should not hit
+	        					break;
+	        			}
+	        			di.setPoint(y, -Math.toRadians(this.sundial.adjustAngle(x)));
+	        	}
+	        	di.drawDial(g);
+	        }
+	        else if(this.nameOfPanel.equals("gnomon")){ //$NON-NLS-1$
+	        	//print gnomon here
+	        	Gnomon gn = new Gnomon(sundial.getLat(), this);
+	        	gn.drawGnomon(g);
+	        }
+	        else{
+	        	System.out.println("This should not happen."); //$NON-NLS-1$
+	        }
+		}
+	}
+
+	/**
+	 * Called from the SunDialFrame class. This method needs to take some kind
+	 * of object as its parameter but it has not been created yet.
+	 * @param s Sundial math object
+	 */
+	public void paintMe (SundialMath s) {
+		System.out.println("Should see this only after pressing button"); //$NON-NLS-1$
+    	this.sundial = s;
+    	this.crunProgram = true;
+		this.repaint();
+	}
 }
