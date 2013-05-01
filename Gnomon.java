@@ -7,7 +7,7 @@ import java.awt.geom.Line2D;
 
 
 public class Gnomon{
-  Point a = new Point();
+	Point a = new Point();
 	Point b = new Point();
 	Point c = new Point();
 	double height;
