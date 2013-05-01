@@ -21,7 +21,6 @@ public class Dial {
 		for(int x = 0; x <= 12; x ++){
 			dialPoints[x] = new Point();
 		}
-		System.out.println("HERE?");
 	}
 	
 	
@@ -32,21 +31,15 @@ public class Dial {
 	public void setPoint(int h, double angle){
 		double lengthTop = height * Math.tan(angle);
 		double lengthSide = width/2 * Math.tan((Math.toRadians(90)) - angle);
-		System.out.println("Hour: " + h + " angle: " + angle + " Math.tan: " + Math.tan(angle));
-		System.out.println("length: " + lengthTop);
-		System.out.println("height: " + height);
-		System.out.println("width: " + width);
 		/*line intersects with side of panel*/
 		if(Math.abs(lengthTop) >= width/2){
 			/*if line is to the right of the gnomon*/
 			if(angle > 0){
-				System.out.println("side, PM");
 				dialPoints[h].setX(width);
 				dialPoints[h].setY(height - Math.abs(lengthSide));
 			}
 			/*if line is to the left of the gnomon*/
 			else{
-				System.out.println("side, AM");
 				dialPoints[h].setX(0.0);
 				dialPoints[h].setY(height - Math.abs(lengthSide));
 			}
@@ -55,13 +48,11 @@ public class Dial {
 		else{
 			/*if line is to the right of the gnomon*/
 			if(angle > 0){
-				System.out.println("top, PM");
 				dialPoints[h].setX((width/2) + Math.abs(lengthTop));
 				dialPoints[h].setY(0.0);
 			}
 			/*if line is to the left of the gnomon*/
 			else{
-				System.out.println("top, AM");
 				dialPoints[h].setX((width/2) - Math.abs(lengthTop));
 				dialPoints[h].setY(0.0);
 			}
@@ -85,8 +76,6 @@ public class Dial {
 	 */
 	public void drawDial(Graphics gr){
 		Graphics2D gr2 = (Graphics2D) gr;
-		System.out.println("DRAW!!!!!!!!!!");
-		//gr.drawLine(0, 314, 782, 314);
 		try{
 			for(int i = 1; i <= 12; i++){
 				if(i == 6){
