@@ -1,5 +1,7 @@
 /**
  *@author Reginald Nartatez
+ *@author Amy Takayesu
+ *@author Bryce Nagareda
  */
  
 import java.util.Calendar;
@@ -12,17 +14,19 @@ public class SundialMath {
 	private double sm;			/*standard meridian*/
 	private String month;		/*month of the year*/
 	private int day;			/*day of the month*/
+	private boolean dSave;		/*true if daylight savings is in effect*/
 
 	/**
 	 * Constructs SundialMath
 	 */
-	public SundialMath (double lat, double lon, double standardM, String mon, int d)
+	public SundialMath (double lat, double lon, double standardM, String mon, int d, boolean b)
 	{
 		phi = lat;
 		longitude = Math.abs(lon);
 		sm = Math.abs(standardM);
 		month = mon;
 		day = d;
+		dSave = b;
 	}
 	
 	/**			
@@ -44,19 +48,14 @@ public class SundialMath {
 	 */
 	public double adjustAngle(double t){
 		int[] a = new int[2];
-		a[0]=(int) t;
+		if(dSave){
+			a[0] = (int) t + 1;
+		}
+		else{
+			a[0]=(int) t;
+		}
 		a[1] = 0;
 		int actualTime = (int)((convertToMin(a) - firstRefinement()) - eot());
-		//double actualTime = (convertToDec(convertTimeToArcDeg(a)) - (firstRefinement()) - (eot()));
-		System.out.println("actualTime: " + actualTime);
-	//	int hour = (int)actualTime;
-	//	int min = (int)((actualTime - hour)*100);
-	//	int[] time = new int[2];
-	//	time[0] = hour;
-	//	time[1] = min;
-	//	System.out.println("hour: " + time[0]);
-	//	System.out.println("min: " + time[1]);
-	//	actualTime = convertToDec(convertTimeToArcDeg(time));
 		double adjustedAngle = calculateAngle(convertToDec(convertTimeToArcDeg(convertToMinHour(actualTime))));
 		return adjustedAngle;
 	}
@@ -73,10 +72,7 @@ public class SundialMath {
 		int[] a = new int[2];
 		a[0]=0;
 		a[1]= (int)minOff;
-		//System.out.println("minoff b4 convert: " + a[1]);
-		//minOff = convertToDec(convertTimeToArcDeg(a));
 		minOff = convertToMin(a);
-		System.out.println("minOff: " + minOff);
 		return minOff;
 	}
 	
@@ -140,19 +136,12 @@ public class SundialMath {
 	{
 		double b = Math.toRadians(360 * (calcDayOfYear() - 81) / 365);
 		double eot = (9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b));
-	//	eot = (eot/100);
-	//	if(eot < 0){
-	//		eot = eot - 0.4;
-	//	}
-	//	else{
-	//		eot = eot + 0.4;
-	//	}
+		
 		int[] t = new int[2];
 		t[0] = 0;
 		t[1] = (int)eot;
-		//eot = convertToDec(convertTimeToArcDeg(t));
+
 		eot = convertToMin(t);
-		System.out.println("eot: " + eot);
 		return eot;
 	}
 	
@@ -169,7 +158,6 @@ public class SundialMath {
 		arcTime[1] = (time[1] % 4) * 15;
 		int arcMinutesCarry =  time[1] / 4; 
 		arcTime[0] += arcMinutesCarry;
-		System.out.println("deg arc hour: " + arcTime[0] + " min: " + arcTime[1]);
 		return arcTime;
 	}
 
